@@ -11,10 +11,12 @@ public class Wget implements Runnable {
     private final String url;
     private final int speed;
     private final Long time = 1000L;
+    private final String out;
 
-    public Wget(String url, int speed) {
+    public Wget(String url, int speed, String out) {
         this.url = url;
         this.speed = speed;
+        this.out = out;
     }
 
     public String getUrl() {
@@ -28,7 +30,7 @@ public class Wget implements Runnable {
     @Override
     public void run() {
         try (BufferedInputStream in = new BufferedInputStream(new URL(getUrl()).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream("pom_tmp.xml")) {
+             FileOutputStream fileOutputStream = new FileOutputStream(out)) {
             byte[] dataBuffer = new byte[1024];
             int bytesRead;
             int countRead = 0;
@@ -44,6 +46,8 @@ public class Wget implements Runnable {
                         timeSleep = time - timeElapsed;
                     }
                     Thread.sleep(timeSleep);
+                    countRead = 0;
+                    start = System.currentTimeMillis();
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -66,8 +70,8 @@ public class Wget implements Runnable {
     }
 
     public static void validate(String[] args) {
-        if (args.length != 2) {
-            throw new IllegalArgumentException("Use two arguments: URL of downloading file, downloading speed");
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Use 3 arguments: URL of downloading file, downloading speed, output file name");
         }
         if (!isValidURL(args[0])) {
             throw new IllegalArgumentException("URL is null or incorrectly specified");
@@ -75,13 +79,17 @@ public class Wget implements Runnable {
         if (!isNumeric(args[1])) {
             throw new IllegalArgumentException("Speed id incorrectly specified");
         }
+        if ((args[2]).isEmpty()) {
+            throw new IllegalArgumentException("output file name is null or incorrectly specified");
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
         validate(args);
         String url = args[0];
         int speed = Integer.parseInt(args[1]);
-        Thread wget = new Thread(new Wget(url, speed));
+        String out = args[2];
+        Thread wget = new Thread(new Wget(url, speed, out));
         wget.start();
         wget.join();
     }
