@@ -5,12 +5,12 @@ import org.apache.commons.validator.routines.UrlValidator;
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Wget implements Runnable {
     private final String url;
     private final int speed;
+    private final Long time = 1000L;
 
     public Wget(String url, int speed) {
         this.url = url;
@@ -31,9 +31,20 @@ public class Wget implements Runnable {
              FileOutputStream fileOutputStream = new FileOutputStream("pom_tmp.xml")) {
             byte[] dataBuffer = new byte[1024];
             int bytesRead;
+            int countRead = 0;
+            long start = System.currentTimeMillis();
+            long timeSleep = 0;
             while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                Thread.sleep(1000);
+                countRead += bytesRead;
+                if (countRead > speed * time) {
+                    long end = System.currentTimeMillis();
+                    long timeElapsed = start - end;
+                    if (timeElapsed < time) {
+                        timeSleep = time - timeElapsed;
+                    }
+                    Thread.sleep(timeSleep);
+                }
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
