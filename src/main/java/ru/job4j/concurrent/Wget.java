@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Wget implements Runnable {
+    private static final Long TIME_POINT = 1000L;
     private final String url;
     private final int speed;
-    private final Long time = 1000L;
     private final String out;
 
     public Wget(String url, int speed, String out) {
@@ -39,11 +39,11 @@ public class Wget implements Runnable {
             while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 countRead += bytesRead;
-                if (countRead > speed * time) {
-                    long end = System.currentTimeMillis();
-                    long timeElapsed = start - end;
-                    if (timeElapsed < time) {
-                        timeSleep = time - timeElapsed;
+                if (countRead >= speed) {
+                    var end = System.currentTimeMillis();
+                    var timeElapsed = start - end;
+                    if (timeElapsed < TIME_POINT) {
+                        timeSleep = TIME_POINT - timeElapsed;
                     }
                     Thread.sleep(timeSleep);
                     countRead = 0;
