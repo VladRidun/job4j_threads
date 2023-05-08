@@ -2,7 +2,6 @@ package ru.job4j.concurrent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,8 +19,8 @@ public class UserCache {
 
     public List<User> findAll() {
         ArrayList<User> userList = new ArrayList<>();
-        for (Map.Entry<Integer, User> entry : users.entrySet()) {
-            userList.add(User.of(entry.getValue().getName()));
+        for (User user: users.values()) {
+            userList.add(User.of(user.getName()));
         }
         return userList;
     }
