@@ -14,18 +14,18 @@ public final class ParseFile {
     }
 
     public String getContent(Predicate<Integer> filter) {
-        String output = "";
+        StringBuffer sb = new StringBuffer();
         try (BufferedInputStream i = new BufferedInputStream(new FileInputStream(file))) {
             byte[] buffer = new byte[256];
             int data;
             while ((data = i.read(buffer, 0, 256)) != -1) {
                 if (filter.test(data)) {
-                    output += (char) data;
+                    sb.append((char) data);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return output;
+        return sb.toString();
     }
 }
