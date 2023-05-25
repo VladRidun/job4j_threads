@@ -12,35 +12,15 @@ public class AccountStorage {
     private final HashMap<Integer, Account> accounts = new HashMap<>();
 
     public synchronized boolean add(Account account) {
-        boolean rsl = false;
-        if (!accounts.containsKey(account.id())) {
-            accounts.put(account.id(), account);
-            rsl = true;
-        }
-        return rsl;
+        return accounts.putIfAbsent(account.id(), account) != null;
     }
 
     public synchronized boolean update(Account account) {
-        boolean rsl = false;
-        if (accounts.containsKey(account.id())) {
-            accounts.replace(account.id(), account);
-            rsl = true;
-        }
-        return rsl;
+        return accounts.replace(account.id(), account) != null;
     }
 
     public synchronized boolean delete(int id) {
-        boolean rsl = false;
-        Account account = null;
-        Optional<Account> optionalAccount = getById(id);
-        if (optionalAccount.isPresent()) {
-            account = optionalAccount.get();
-        }
-        if (accounts.containsKey(account.id())) {
-            accounts.remove(account.id());
-            rsl = true;
-        }
-        return rsl;
+        return accounts.remove(id) != null;
     }
 
     public Optional<Account> getById(int id) {
@@ -51,14 +31,10 @@ public class AccountStorage {
         boolean rsl = false;
         Optional<Account> accountOptFrom = getById(fromId);
         Optional<Account> accountOptTo = getById(toId);
-        if (accountOptFrom.isPresent() && accountOptTo.isPresent()) {
-            Account accountFrom = accountOptFrom.get();
-            Account accountTo = accountOptTo.get();
-            if (accountFrom != null && accountTo != null && accountFrom.amount() >= amount) {
-                update(new Account(accountFrom.id(), accountFrom.amount() - amount));
-                update(new Account(accountTo.id(), accountTo.amount() + amount));
+        if (accountOptFrom.isPresent() && accountOptTo.isPresent() && accountOptFrom.get().amount()>= amount) {
+                update(new Account(accountOptFrom.get().id(), accountOptFrom.get().amount() - amount));
+                update(new Account(accountOptTo.get().id(), accountOptTo.get().amount() + amount));
                 rsl = true;
-            }
         }
         return rsl;
     }
