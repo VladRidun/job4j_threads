@@ -31,10 +31,10 @@ public class AccountStorage {
         boolean rsl = false;
         Optional<Account> accountOptFrom = getById(fromId);
         Optional<Account> accountOptTo = getById(toId);
-        if (accountOptFrom.isPresent() && accountOptTo.isPresent() && accountOptFrom.get().amount()>= amount) {
-                update(new Account(accountOptFrom.get().id(), accountOptFrom.get().amount() - amount));
-                update(new Account(accountOptTo.get().id(), accountOptTo.get().amount() + amount));
-                rsl = true;
+        if (accountOptFrom.isPresent() && accountOptTo.isPresent() && accountOptFrom.get().amount() >= amount) {
+            update(new Account(accountOptFrom.get().id(), accountOptFrom.get().amount() - amount));
+            update(new Account(accountOptTo.get().id(), accountOptTo.get().amount() + amount));
+            rsl = true;
         }
         return rsl;
     }
