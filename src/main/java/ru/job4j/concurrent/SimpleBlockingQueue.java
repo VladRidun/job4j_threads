@@ -4,32 +4,34 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
-    private Queue<T> queue = new LinkedList<>();
+    private final Queue<T> queue = new LinkedList<>();
+    private final int size;
 
-    public SimpleBlockingQueue(Queue<T> queue) {
-        this.queue = queue;
+    public SimpleBlockingQueue(int size) {
+        this.size = size;
     }
 
-    public synchronized void offer(T value) {
+
+    public synchronized void offer(T value) throws InterruptedException {
+        while (queue.size() >= size) {
+            wait();
+        }
         queue.offer(value);
         notify();
     }
 
-    public synchronized T poll() {
-        if (queue.isEmpty()) {
-            try {
+    public synchronized T poll() throws InterruptedException {
+        while (queue.isEmpty()) {
                 wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-        }
-        return queue.poll();
+        T result = queue.poll();
+        notify();
+        return result;
     }
 }
