@@ -25,4 +25,5 @@ public class Base {
     public void setName(String name) {
         this.name = name;
     }
+
 }

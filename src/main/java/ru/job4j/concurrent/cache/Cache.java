@@ -31,4 +31,5 @@ public class Cache {
     public Map<Integer, Base> getMemory() {
         return new HashMap<>(memory);
     }
+
 }
