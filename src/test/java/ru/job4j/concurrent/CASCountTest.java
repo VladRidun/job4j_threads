@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 class CasCountTest {
 
     @Test
-    void whenExecute2ThreadThen20() throws InterruptedException {
+    void whenExecute2ThreadThen10() throws InterruptedException {
         var count = new CASCount();
         var first = new Thread(() -> {
             for (int i = 0; i < 5; i++) {
