@@ -25,7 +25,7 @@ public class Cache {
     }
 
     public void delete(Base model) {
-        memory.remove(model.getId());
+        memory.remove(model.getId(), model);
     }
 
     public Map<Integer, Base> getMemory() {

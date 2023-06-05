@@ -15,8 +15,8 @@ class CacheTest {
     @Test
     void whenAdd() {
         Cache cache = new Cache();
-        Base base1 = new Base(1, 100);
-        Base base2 = new Base(2, 200);
+        Base base1 = new Base(1, 1);
+        Base base2 = new Base(2, 2);
         assertThat(cache.add(base1)).isTrue();
         assertThat(cache.add(base1)).isFalse();
         assertThat(cache.add(base2)).isTrue();
@@ -26,36 +26,36 @@ class CacheTest {
     @Test
     void whenUpdate() {
         Cache cache = new Cache();
-        Base base1 = new Base(1, 100);
-        Base base2 = new Base(2, 200);
-        Base base3 = new Base(1, 100);
+        Base base1 = new Base(1, 1);
+        Base base2 = new Base(2, 2);
+        Base base3 = new Base(1, 1);
         cache.add(base1);
         cache.add(base2);
         assertThat(cache.update(base3)).isTrue();
-        assertThat(cache.update(new Base(5, 400))).isFalse();
-        assertThat(cache.getMemory().get(base1.getId()).getVersion()).isEqualTo(101);
+        assertThat(cache.update(new Base(3, 3))).isFalse();
+        assertThat(cache.getMemory().get(base1.getId()).getVersion()).isEqualTo(2);
     }
 
     @Test
     void whenUpdateCheckName() {
         Cache cache = new Cache();
-        Base base1 = new Base(1, 100);
-        Base base3 = new Base(1, 100);
-        base1.setName("qwerty");
+        Base base1 = new Base(1, 1);
+        Base base3 = new Base(1, 1);
+        base1.setName("jobisdone");
         cache.add(base1);
         cache.update(base3);
-        assertThat(cache.getMemory().get(base1.getId()).getName()).isEqualTo("qwerty");
+        assertThat(cache.getMemory().get(base1.getId()).getName()).isEqualTo("jobisdone");
     }
 
     @Test
     void whenDelete() {
         Cache cache = new Cache();
-        Base base1 = new Base(1, 100);
-        Base base2 = new Base(2, 200);
+        Base base1 = new Base(1, 1);
+        Base base2 = new Base(2, 2);
         Base base3 = base2;
         cache.add(base1);
         cache.add(base2);
-        base2 = new Base(2, 205);
+        base2 = new Base(2, 3);
         cache.delete(base1);
         cache.delete(base2);
         assertThat(cache.getMemory()).containsEntry(2, base3);
@@ -64,9 +64,9 @@ class CacheTest {
     @Test
     void whenUpdateThenException() {
         Cache cache = new Cache();
-        Base base1 = new Base(1, 100);
+        Base base1 = new Base(1, 1);
         cache.add(base1);
-        assertThatThrownBy(() -> cache.update(new Base(1, 110)))
+        assertThatThrownBy(() -> cache.update(new Base(1, 11)))
                 .isInstanceOf(OptimisticException.class)
                 .message()
                 .isNotEmpty();
