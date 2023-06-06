@@ -13,8 +13,7 @@ public class ThreadPool {
 
     public ThreadPool() {
         for (int i = 0; i <= size; i++) {
-            threads.add(new Thread(() ->
-            {
+            threads.add(new Thread(() -> {
                 try {
                     tasks.poll();
                 } catch (InterruptedException e) {
@@ -25,8 +24,8 @@ public class ThreadPool {
         threads.forEach(Thread::start);
     }
 
-    public void work(Runnable job)  throws Exception {
-           tasks.offer(job);
+    public void work(Runnable job) throws Exception {
+        tasks.offer(job);
     }
 
     public void shutdown() {
