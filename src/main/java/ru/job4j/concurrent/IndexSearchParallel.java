@@ -27,7 +27,7 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
             right.fork();
             int resultLeft = (int) left.join();
             int resultRight = (int) right.join();
-           result = Math.max(resultLeft, resultRight);
+            result = Math.max(resultLeft, resultRight);
         } else {
             result = search(array, elementToSearch, from, to);
         }
@@ -46,7 +46,7 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
     public static void main(String[] args) {
         Integer[] array = new Integer[]{5, 6, 7, 7676, 78, 8, 9, 9, 0, 10, 11, 34};
         int from = 0;
-        int to = array.length-1;
+        int to = array.length - 1;
         int elSearch = 7676;
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         System.out.println(forkJoinPool.invoke(new IndexSearchParallel<>(array, elSearch, from, to)));
