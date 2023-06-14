@@ -18,25 +18,22 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        int result;
-        if (array.length > 10) {
-            int mid = (from + to) / 2;
-            IndexSearchParallel left = new IndexSearchParallel(array, elementToSearch, from, mid);
-            IndexSearchParallel right = new IndexSearchParallel(array, elementToSearch, mid + 1, to);
-            left.fork();
-            right.fork();
-            int resultLeft = (int) left.join();
-            int resultRight = (int) right.join();
-            result = Math.max(resultLeft, resultRight);
-        } else {
-            result = search(array, elementToSearch, from, to);
+        if (from - to <= 10) {
+            return search();
         }
-        return result;
+        int mid = (from + to) / 2;
+        IndexSearchParallel<T> left = new IndexSearchParallel(array, elementToSearch, from, mid);
+        IndexSearchParallel<T> right = new IndexSearchParallel(array, elementToSearch, mid + 1, to);
+        left.fork();
+        right.fork();
+        Integer resultLeft = left.join();
+        Integer resultRight = right.join();
+        return Math.max(resultLeft, resultRight);
     }
 
-    public int search(T[] array, T elementToSearch, int from, int to) {
+    public int search() {
         for (int i = from; i <= to; i++) {
-            if (array[i].equals(elementToSearch)) {
+            if (elementToSearch.equals(array[i])) {
                 return i;
             }
         }
