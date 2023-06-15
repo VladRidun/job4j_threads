@@ -29,20 +29,20 @@ public class RolColSum {
 
     public static Sums[] sum(int[][] matrix) {
         int size = matrix.length;
-            Sums[] sums = new Sums[size];
-            for (int i = 0; i < size; i++) {
-                sums[i] = new Sums();
-                int rowSum = 0;
-                int colSum = 0;
-                for (int j = 0; j < size; j++) {
-                    rowSum += matrix[i][j];
-                    colSum += matrix[j][i];
-                }
-                sums[i].setColSum(colSum);
-                sums[i].setRowSum(rowSum);
+        Sums[] sums = new Sums[size];
+        for (int i = 0; i < size; i++) {
+            sums[i] = new Sums();
+            int rowSum = 0;
+            int colSum = 0;
+            for (int j = 0; j < size; j++) {
+                rowSum += matrix[i][j];
+                colSum += matrix[j][i];
             }
-            return sums;
+            sums[i].setColSum(colSum);
+            sums[i].setRowSum(rowSum);
         }
+        return sums;
+    }
 
     public static Sums[] asyncSum(int[][] matrix) throws ExecutionException, InterruptedException {
         int size = matrix.length;
@@ -59,8 +59,8 @@ public class RolColSum {
         return CompletableFuture.supplyAsync(() -> {
             int colSum = 0;
             for (int i = 0; i < size; i++) {
-                    colSum += data[i][col];
-                }
+                colSum += data[i][col];
+            }
             return colSum;
         });
     }
@@ -68,15 +68,15 @@ public class RolColSum {
     public static CompletableFuture<Integer> getRowTask(int[][] data, int row, int size) {
         return CompletableFuture.supplyAsync(() -> {
             int rowSum = 0;
-                for (int j = 0; j < size; j++) {
-                    rowSum += data[row][j];
-                }
+            for (int j = 0; j < size; j++) {
+                rowSum += data[row][j];
+            }
             return rowSum;
         });
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+        int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         System.out.println((asyncSum(matrix)));
         System.out.println(Arrays.toString(sum(matrix)));
 
