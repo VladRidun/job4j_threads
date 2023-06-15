@@ -1,4 +1,4 @@
-package ru.job4j.concurrent;
+package ru.job4j.concurrent.pool;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CompletableFutureDiagonalExample {
     public static int[] asyncSum(int[][] matrix) throws ExecutionException, InterruptedException {
+        System.out.println(matrix.length);
         int n = matrix.length;
         int[] sums = new int[2 * n];
         Map<Integer, CompletableFuture<Integer>> futures = new HashMap<>();

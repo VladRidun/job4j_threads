@@ -1,4 +1,4 @@
-package ru.job4j.concurrent;
+package ru.job4j.concurrent.pool;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
