@@ -19,7 +19,7 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
     @Override
     protected Integer compute() {
         if (from - to <= 10) {
-            return search();
+            return searchLine();
         }
         int mid = (from + to) / 2;
         IndexSearchParallel<T> left = new IndexSearchParallel(array, elementToSearch, from, mid);
@@ -31,13 +31,18 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
         return Math.max(resultLeft, resultRight);
     }
 
-    public int search() {
+    public int searchLine() {
         for (int i = from; i <= to; i++) {
             if (elementToSearch.equals(array[i])) {
                 return i;
             }
         }
         return -1;
+    }
+
+    public static <T> int search(T [] array, T elSearch) {
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        return forkJoinPool.invoke(new IndexSearchParallel<>(array, elSearch, 0, array.length-1));
     }
 
     public static void main(String[] args) {
