@@ -40,9 +40,9 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
         return -1;
     }
 
-    public static <T> int search(T [] array, T elSearch) {
+    public static <T> int search(T[] array, T elSearch) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        return forkJoinPool.invoke(new IndexSearchParallel<>(array, elSearch, 0, array.length-1));
+        return forkJoinPool.invoke(new IndexSearchParallel<>(array, elSearch, 0, array.length - 1));
     }
 
     public static void main(String[] args) {
