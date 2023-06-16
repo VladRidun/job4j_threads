@@ -47,7 +47,7 @@ public class RolColSum {
     public static Sums[] asyncSum(int[][] matrix) throws ExecutionException, InterruptedException {
         int size = matrix.length;
         Sums[] sums = new Sums[size];
-        for (int i = 1; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             sums[i] = new Sums();
             sums[i].setColSum(getColTask(matrix, i, size).get());
             sums[i].setRowSum(getRowTask(matrix, i, size).get());
@@ -77,9 +77,17 @@ public class RolColSum {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        System.out.println((asyncSum(matrix)));
-        System.out.println(Arrays.toString(sum(matrix)));
-
+        Sums[] sums1 = sum(matrix);
+        Sums[] sums2 = asyncSum(matrix);
+        for (Sums s: sums1) {
+            System.out.print(s.getColSum());
+            System.out.print(s.getRowSum());
+        }
+        System.out.println("////////////////////////////////// multi");
+        for (Sums s: sums2) {
+            System.out.print(s.getColSum());
+            System.out.print(s.getRowSum());
+        }
     }
 
 }
