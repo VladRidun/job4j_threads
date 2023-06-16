@@ -11,7 +11,7 @@ import static ru.job4j.concurrent.pool.RolColSum.sum;
 class RolColSumTest {
 
     @Test
-    void WhenSumLineEqualsTrue() {
+    void whenSumLineEqualsTrue() {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         RolColSum.Sums sum1 = new RolColSum.Sums();
         sum1.setColSum(12);
@@ -22,7 +22,7 @@ class RolColSumTest {
     }
 
     @Test
-    void WhenAsyncSumLineEqualsTrue() throws ExecutionException, InterruptedException {
+    void whenAsyncSumLineEqualsTrue() throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         RolColSum.Sums sum1 = new RolColSum.Sums();
         sum1.setColSum(12);
