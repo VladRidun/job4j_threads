@@ -79,12 +79,12 @@ public class RolColSum {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         Sums[] sums1 = sum(matrix);
         Sums[] sums2 = asyncSum(matrix);
-        for (Sums s: sums1) {
+        for (Sums s : sums1) {
             System.out.print(s.getColSum());
             System.out.print(s.getRowSum());
         }
         System.out.println("////////////////////////////////// multi");
-        for (Sums s: sums2) {
+        for (Sums s : sums2) {
             System.out.print(s.getColSum());
             System.out.print(s.getRowSum());
         }
