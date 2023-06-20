@@ -89,5 +89,4 @@ public class RolColSum {
             System.out.print(s.getRowSum());
         }
     }
-
 }

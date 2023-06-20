@@ -87,7 +87,7 @@ public class CompletableFutureExample {
 
     public static void thenComposeExample() throws Exception {
         CompletableFuture<String> result = goToTrash().thenCompose(a -> buyProduct("Milk"));
-        result.get(); // wait calculations;
+        result.get();
     }
 
     public static void thenCombineExample() throws Exception {
@@ -138,14 +138,14 @@ public class CompletableFutureExample {
     }
 
     public static void main(String[] args) throws Exception {
-        //runAsyncExample();
-        //supplyAsyncExample();
-        //thenRunExample();
-        //thenAcceptExample();
-        //thenApplyExample();
-        //thenComposeExample();
-        // thenCombineExample();
-        //allOfExample();
+        runAsyncExample();
+        supplyAsyncExample();
+        thenRunExample();
+        thenAcceptExample();
+        thenApplyExample();
+        thenComposeExample();
+        thenCombineExample();
+        allOfExample();
         anyOfExample();
     }
 }
