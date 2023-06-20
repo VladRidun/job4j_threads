@@ -1,6 +1,5 @@
 package ru.job4j.concurrent.pool;
 
-import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -83,7 +82,7 @@ public class RolColSum {
             System.out.print(s.getColSum());
             System.out.print(s.getRowSum());
         }
-        System.out.println("////////////////////////////////// multi");
+        System.out.println("multi:");
         for (Sums s : sums2) {
             System.out.print(s.getColSum());
             System.out.print(s.getRowSum());
