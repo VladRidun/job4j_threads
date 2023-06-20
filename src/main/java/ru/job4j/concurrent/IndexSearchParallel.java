@@ -53,4 +53,5 @@ public class IndexSearchParallel<T> extends RecursiveTask<Integer> {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         System.out.println(forkJoinPool.invoke(new IndexSearchParallel<>(array, elSearch, from, to)));
     }
+
 }
