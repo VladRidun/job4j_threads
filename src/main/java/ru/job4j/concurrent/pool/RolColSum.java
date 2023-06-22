@@ -10,8 +10,8 @@ public class RolColSum {
         int rowSum = 0;
         int colSum = 0;
         for (int i = 0; i < matrix.length; i++) {
-                rowSum += matrix[index][i];
-                colSum += matrix[i][index];
+            rowSum += matrix[index][i];
+            colSum += matrix[i][index];
         }
         sum.setColSum(colSum);
         sum.setRowSum(rowSum);
@@ -22,7 +22,7 @@ public class RolColSum {
         int size = matrix.length;
         Sums[] sums = new Sums[size];
         for (int i = 0; i < size; i++) {
-            sums[i] = new Sums(0,0);
+            sums[i] = new Sums(0, 0);
             Sums sum = getSum(matrix, i);
             sums[i] = sum;
         }
@@ -34,16 +34,14 @@ public class RolColSum {
         Sums[] sums = new Sums[size];
         for (int i = 0; i < size; i++) {
             int finalI = i;
-            sums[i] = CompletableFuture.supplyAsync(
-                    () -> getSum(matrix, finalI)
-            ).get();
+            sums[i] = CompletableFuture.supplyAsync(() -> getSum(matrix, finalI)).get();
         }
         return sums;
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        Sums[] sumTest = {new Sums(6, 12), new Sums(15, 15),new Sums(24, 18)};
+        Sums[] sumTest = {new Sums(6, 12), new Sums(15, 15), new Sums(24, 18)};
         Sums[] sums1 = sum(matrix);
         Sums[] sums2 = asyncSum(matrix);
         for (Sums s : sums1) {

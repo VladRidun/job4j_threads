@@ -32,7 +32,9 @@ public class Sums {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Sums sums = (Sums) o;
         return rowSum == sums.rowSum && colSum == sums.colSum;
     }
@@ -44,9 +46,9 @@ public class Sums {
 
     @Override
     public String toString() {
-        return "Sums{" +
-                "rowSum=" + rowSum +
-                ", colSum=" + colSum +
-                '}';
+        return "Sums{"
+                + "rowSum=" + rowSum
+                + ", colSum=" + colSum
+                + '}';
     }
 }
