@@ -13,22 +13,16 @@ class RolColSumTest {
     @Test
     void whenSumLineEqualsTrue() {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        RolColSum.Sums sum1 = new RolColSum.Sums();
-        sum1.setColSum(12);
-        sum1.setRowSum(6);
-        RolColSum.Sums[] sum2 = sum(matrix);
-        assertThat(sum2[0].getColSum()).isEqualTo(sum1.getColSum());
-        assertThat(sum2[0].getRowSum()).isEqualTo(sum1.getRowSum());
+        Sums[] sumTest = {new Sums(6, 12), new Sums(15, 15),new Sums(24, 18)};
+        Sums[] sumGet = sum(matrix);
+        assertThat(sumGet).isEqualTo(sumTest);
     }
 
     @Test
     void whenAsyncSumLineEqualsTrue() throws ExecutionException, InterruptedException {
         int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        RolColSum.Sums sum1 = new RolColSum.Sums();
-        sum1.setColSum(12);
-        sum1.setRowSum(6);
-        RolColSum.Sums[] sum2 = asyncSum(matrix);
-        assertThat(sum2[0].getColSum()).isEqualTo(sum1.getColSum());
-        assertThat(sum2[0].getRowSum()).isEqualTo(sum1.getRowSum());
+        Sums[] sumTest = {new Sums(6, 12), new Sums(15, 15),new Sums(24, 18)};
+        Sums[] sumsGet = asyncSum(matrix);
+        assertThat(sumsGet).containsExactly(sumTest);
     }
 }
